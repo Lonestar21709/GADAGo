@@ -1,3 +1,4 @@
+# Ignore
 *.jar
 nbproject/private/
 build/
@@ -5,3 +6,6 @@ out/
 dist/
 .idea/
 iosCerts
+
+# Allow
+!lib/CodenameOne.jar
