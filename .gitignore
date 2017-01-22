@@ -1,0 +1,8 @@
+*.jar
+nbproject/private/
+build/
+out/
+dist/
+lib/CodenameOne_SRC.zip
+.idea/
+iosCerts
