@@ -1,6 +1,5 @@
 package com.lyledenman.gadago;
 
-import com.codename1.ui.*;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
