@@ -1,23 +1,15 @@
 package com.lyledenman.gadago;
 
-import com.codename1.io.Log;
-import com.codename1.location.Location;
-import com.codename1.location.LocationManager;
 import com.codename1.ui.*;
-import com.codename1.ui.animations.CommonTransitions;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
-import com.codename1.ui.Dialog;
-import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import com.codename1.ui.util.UITimer;
-import sun.security.util.Password;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -32,7 +24,7 @@ public class GADAGo {
     private boolean userLoggedIn;
     private boolean isUserLoggedIn() {
         // STUB
-        return false;
+        return true;
     }
 
     public void init(Object context) {
@@ -55,44 +47,116 @@ public class GADAGo {
         }
 
         if (userLoggedIn) {
-            Form hi = new Form("GADA Go", new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
-            Form login = new Form("Login");
-            final Label apple = new Label(theme.getImage("apple-icon.png"));
-            final Label android = new Label(theme.getImage("android-icon.png"));
-            final Label windows = new Label(theme.getImage("windows-icon.png"));
-            Location position = LocationManager.getLocationManager().getCurrentLocationSync();
-//        System.out.printf("Position: %s", position);
-            Double lat = position.getLatitude();
-            Double lon = position.getLongitude();
-            Button getStarted = new Button("Lat: " + lat + " Long: " + lon);
-            FontImage.setMaterialIcon(getStarted, FontImage.MATERIAL_LINK);
-            getStarted.setUIID("GetStarted");
-            hi.addComponent(BorderLayout.CENTER,
+            Form profileForm = new Form("GADA Go",new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
+
+            FontImage messageIcon = FontImage.createMaterial(FontImage.MATERIAL_CHAT, UIManager.getInstance().getComponentStyle("TitleCommand"));
+            FontImage settingsIcon = FontImage.createMaterial(FontImage.MATERIAL_SETTINGS_APPLICATIONS, UIManager.getInstance().getComponentStyle("TitleCommand"));
+
+
+            profileForm.getToolbar().addCommandToSideMenu("", messageIcon, (e) -> System.out.println("Clicked"));
+            profileForm.getToolbar().addCommandToOverflowMenu("", settingsIcon, (e) -> System.out.println("Clicked"));
+
+            // Create profile buttons
+            Button viewFriends = new Button("Friends");
+            FontImage.setMaterialIcon(viewFriends, FontImage.MATERIAL_PERSON);
+
+            Button viewPrefs = new Button("Preferences");
+            FontImage.setMaterialIcon(viewPrefs, FontImage.MATERIAL_CHECK_BOX);
+
+            Button viewInvites = new Button("Invitations");
+            FontImage.setMaterialIcon(viewInvites, FontImage.MATERIAL_INSERT_INVITATION);
+
+            // Set userImage
+            Label userImg = new Label(theme.getImage("user_200.png"));
+            profileForm.addComponent(BorderLayout.CENTER,
                     LayeredLayout.encloseIn(
                             BoxLayout.encloseY(
-                                    new Label(theme.getImage("duke-no-logos.png")),
-                                    getStarted
-                            ),
-                            FlowLayout.encloseRightMiddle(apple)
+                                    userImg,
+                                    viewFriends,
+                                    viewPrefs,
+                                    viewInvites
+                            )
                     )
             );
 
-            getStarted.addActionListener((e) -> {
+            // FRIENDS FORM
+            Form friendsForm = new Form("Friends", new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
+            setBackCommand(friendsForm, profileForm);
+            final TextField searchField = new TextField();
+            searchField.setHint("Find a new friend");
+
+            Button friend1 = new Button ("Cesar          10.1 mi");
+            Button friend2 = new Button("Gina            3.9 mi");
+            Button friend3 = new Button("Michael         l4.5 mi");
+
+            Component.setSameWidth(searchField, friend1);
+            friendsForm.addComponent(BorderLayout.NORTH,
+                    LayeredLayout.encloseIn(
+                            BoxLayout.encloseY(
+                                searchField,
+                                friend1,
+                                friend2,
+                                friend3
+                            )
+                    )
+            );
+
+            // PREFERENCES FORM
+            Form preferencesForm = new Form("Preferences", new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
+            setBackCommand(preferencesForm, profileForm);
+
+            Container buttonContainer = new Container(BoxLayout.y());
+            buttonContainer.setScrollableY(true);
+            System.out.println(buttonContainer.isScrollableY());
+
+            GetButtonsFromText gb = new GetButtonsFromText();
+            try
+            {
+                gb.getButtonsFromText();
+            } catch (FileNotFoundException e) {
+                System.out.println("Failed.");
+            }
+
+            java.util.List<String> list = gb.getItemList();
+            java.util.Iterator<String> listIterator = list.iterator();
+            while (listIterator.hasNext()) {
+                Button newButton = new Button(listIterator.next());
+                newButton.addActionListener((e) -> {
+                    System.out.println(newButton.getText());
+                });
+                // Current setUIID options: {Button_Gray, Button_Green}
+                buttonContainer.add(newButton);
+            }
+
+            // Add buttons to PreferencesForm
+            preferencesForm.addComponent(BorderLayout.NORTH,
+                    LayeredLayout.encloseIn(
+                            BoxLayout.encloseY(
+                                buttonContainer
+                            )
+                    )
+            );
+
+            // INVITATIONS FORM
+            Form invitationsForm = new Form("Invitations", new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
+            setBackCommand(invitationsForm, profileForm);
+
+            viewFriends.addActionListener((ActionEvent e) -> {
                 //Display.getInstance().execute("https://www.codenameone.com/developers.html");
+                friendsForm.show();
             });
 
-            new UITimer(() -> {
-                if(apple.getParent() != null) {
-                    apple.getParent().replace(apple, android, CommonTransitions.createFade(500));
-                } else {
-                    if(android.getParent() != null) {
-                        android.getParent().replace(android, windows, CommonTransitions.createFade(500));
-                    } else {
-                        windows.getParent().replace(windows, apple, CommonTransitions.createFade(500));
-                    }
-                }
-            }).schedule(2200, true, hi);
-            hi.show();
+            viewPrefs.addActionListener((ActionEvent e) -> {
+                //Display.getInstance().execute("https://www.codenameone.com/developers.html");
+                preferencesForm.show();
+            });
+
+            viewInvites.addActionListener((ActionEvent e) -> {
+                //Display.getInstance().execute("https://www.codenameone.com/developers.html");
+                invitationsForm.show();
+            });
+
+            profileForm.show();
         } else {
             // Login Form
             // Shown if user is not logged in
@@ -127,7 +191,11 @@ public class GADAGo {
 
                         // If the user is validated, run start() again
                         if (userLoggedIn) {
-                            start();
+                            try {
+                                start();
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
                         }
                     }
                 }
