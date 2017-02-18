@@ -1,6 +1,9 @@
 package com.lyledenman.gadago;
 
 import com.codename1.ui.*;
+import com.codename1.location.Location;
+import com.codename1.location.LocationManager;
+import com.codename1.ui.animations.CommonTransitions;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
@@ -8,8 +11,10 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-
 import java.io.FileNotFoundException;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.util.UITimer;
 
 
 /**
