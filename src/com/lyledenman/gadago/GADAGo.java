@@ -58,6 +58,10 @@ public class GADAGo {
             Friend cesar = friendDB.searchByName("Cesar Garza");
             myFriends.addFriend(cesar);
 
+            // Set up PrefsButtonContainer
+            Container prefsButtonContainer = new Container(BoxLayout.y());
+            prefsButtonContainer.setScrollableY(true);
+
             Form profileForm = new Form("GADA Go",new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
 
             FontImage messageIcon = FontImage.createMaterial(FontImage.MATERIAL_CHAT, UIManager.getInstance().getComponentStyle("TitleCommand"));
@@ -113,7 +117,7 @@ public class GADAGo {
                 friendButton = new Button(String.format("%-20s %6.2f mi", friend.getName(), friend.getLocation().distanceTo(myLoc)));
                 friendButton.addActionListener((e) -> {
                     System.out.println("Clicked on friend: " + friend.getName());
-                    SharedPrefsForm sharedPrefs = new SharedPrefsForm(friend, friendsForm);
+                    SharedPrefsForm sharedPrefs = new SharedPrefsForm(friend, friendsForm, prefsButtonContainer);
                     sharedPrefs.showForm();
                 });
 
@@ -133,9 +137,6 @@ public class GADAGo {
             Form preferencesForm = new Form("Preferences", new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
             setBackCommand(preferencesForm, profileForm);
 
-            Container buttonContainer = new Container(BoxLayout.y());
-            buttonContainer.setScrollableY(true);
-
             GetButtonsFromText gb = new GetButtonsFromText();
             gb.getButtonsFromText();
 
@@ -149,14 +150,14 @@ public class GADAGo {
                     newButton.setPreference(!newButton.isPreference());
                     newButton.setUIID(newButton.isPreference() ? "Button" : "CalendarDay");
                 });
-                buttonContainer.add(newButton);
+                prefsButtonContainer.add(newButton);
             }
 
             // Add buttons to PreferencesForm
             preferencesForm.addComponent(BorderLayout.NORTH,
                     LayeredLayout.encloseIn(
                             BoxLayout.encloseY(
-                                    buttonContainer
+                                    prefsButtonContainer
                             )
                     )
             );

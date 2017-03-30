@@ -1,12 +1,14 @@
 package com.lyledenman.gadago;
 
+import java.util.Set;
+
 /**
  * Created by wally on 3/28/17.
  */
 public class Friend {
     String name;
     Location location;
-    int[] preferences;
+    Set<Integer> preferences;
 
     public String getName() {
         return name;
@@ -16,15 +18,14 @@ public class Friend {
         return location;
     }
 
-    Friend(String name, Location location, int[] preferences) {
+    Friend(String name, Location location, Set<Integer> preferences) {
         this.name = name;
         this.location = location;
         this.preferences = preferences;
     }
 
-    public int[] getMatchingPreferences() {
-        int[] prefs = {0, 2, 4};
-        return prefs;
+    public Set<Integer> getMatchingPreferences() {
+        return preferences;
     }
 
 }

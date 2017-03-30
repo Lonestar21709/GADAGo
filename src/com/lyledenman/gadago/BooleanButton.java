@@ -4,15 +4,12 @@ import com.codename1.ui.Command;
 import com.codename1.ui.Image;
 
 public class BooleanButton extends Button {
-    public boolean isPreference() {
-        return isPreference;
-    }
+
+    private boolean isPreference = false;
 
     public void setPreference(boolean preference) {
         isPreference = preference;
     }
-
-    boolean isPreference = false;
 
     BooleanButton() {
         super();
@@ -33,5 +30,10 @@ public class BooleanButton extends Button {
     BooleanButton(String text, Image icon) {
         super(text, icon);
     }
+
+    public boolean isPreference() {
+        return isPreference;
+    }
+
 
 }

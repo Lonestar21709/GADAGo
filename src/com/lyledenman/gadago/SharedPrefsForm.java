@@ -16,21 +16,26 @@ public class SharedPrefsForm {
     Form sharedPrefsForm;
     Form backToPage;
 
-    SharedPrefsForm(Friend friend, Form backToPage) {
+    SharedPrefsForm(Friend friend, Form backToPage, Container prefsButtons) {
 
-        sharedPrefsForm = new Form("Shared Preferences", new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
+        String[] name = friend.getName().split(" ");
+        sharedPrefsForm = new Form(String.format("You and %s like", name[0]), new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
         setBackCommand(sharedPrefsForm, backToPage);
 
         Container sharedPrefsContainer = new Container(BoxLayout.y());
         sharedPrefsContainer.setScrollableY(true);
 
+        int counter = 0;
+        for (Object o : prefsButtons) {
+            if (o instanceof BooleanButton) {
+                if (((BooleanButton) o).isPreference() && friend.getMatchingPreferences().contains(counter)) {
+                    System.out.println("You and friend both like: " + ((BooleanButton) o).getText());
 
-        TextArea prefs = new TextArea(String.format("Making plans with %s", friend.getName()));
-        prefs.getStyle().setFgColor(0xff);
-        prefs.getStyle().setBgColor(0x0fff);
-        prefs.addActionListener((ActionEvent e) -> {
-        });
-        sharedPrefsContainer.add(prefs);
+                    System.out.println();
+                }
+            }
+            counter++;
+        }
 
         sharedPrefsForm.addComponent(BorderLayout.NORTH,
                 LayeredLayout.encloseIn(
@@ -39,7 +44,6 @@ public class SharedPrefsForm {
                         )
                 )
         );
-
     }
 
     public void showForm() {

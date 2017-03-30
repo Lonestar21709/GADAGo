@@ -11,17 +11,20 @@ public class FriendDB {
 
     FriendDB(boolean init) {
         Location ginaLoc = new Location("Gina Hall", 30.526394, -97.684899);
-        int[] ginaPrefs = {0, 2, 5};
+        Set<Integer> ginaPrefs = new HashSet<>();
+        ginaPrefs.add(1);
+        ginaPrefs.add(3);
+        ginaPrefs.add(5);
         Friend gina = new Friend("Gina Hall", ginaLoc, ginaPrefs);
         friends.add(gina);
 
         Location michaelLoc = new Location("Michael Foster", 30.374624, -97.738907);
-        int[] michaelPrefs = {0, 1, 3, 6};
+        Set<Integer> michaelPrefs = null;
         Friend michael = new Friend("Michael Foster", michaelLoc, michaelPrefs);
         friends.add(michael);
 
         Location cesarLoc = new Location("Gina Hall", 30.305916, -97.721623);
-        int[] cesarPrefs = {1, 4, 5, 7, 9};
+        Set<Integer> cesarPrefs = null;
         Friend cesar = new Friend("Cesar Garza", cesarLoc, cesarPrefs);
         friends.add(cesar);
 
