@@ -90,6 +90,7 @@ public class GADAGo {
                     )
             );
 
+
             // FRIENDS FORM
             Form friendsForm = new Form("Friends", new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
             setBackCommand(friendsForm, profileForm);
@@ -106,14 +107,14 @@ public class GADAGo {
             ArrayList<Button> friendButtons = new ArrayList<>();
 
             java.util.Iterator<Friend> f = myFriends.getAllFriends().iterator();
-            while (f.hasNext()) {
 
-                Friend friend = f.next();
-
+            for (Friend friend : myFriends.getAllFriends()) {
                 Button friendButton = new Button();
                 friendButton = new Button(String.format("%-20s %6.2f mi", friend.getName(), friend.getLocation().distanceTo(myLoc)));
                 friendButton.addActionListener((e) -> {
-                    System.out.println(e);
+                    System.out.println("Clicked on friend: " + friend.getName());
+                    SharedPrefsForm sharedPrefs = new SharedPrefsForm(friend, friendsForm);
+                    sharedPrefs.showForm();
                 });
 
                 friendContainer.add(friendButton);
@@ -163,6 +164,26 @@ public class GADAGo {
             // INVITATIONS FORM
             Form invitationsForm = new Form("Invitations", new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
             setBackCommand(invitationsForm, profileForm);
+
+            Container invitesContainer = new Container(BoxLayout.y());
+            invitesContainer.setScrollableY(true);
+
+
+            TextArea noInvites = new TextArea("You have no current plans, but you can make some. Click to invite a friend.");
+            noInvites.getStyle().setFgColor(0xff);
+            noInvites.getStyle().setBgColor(0x0fff);
+            noInvites.addActionListener((ActionEvent e) -> {
+                friendsForm.show();
+            });
+            invitesContainer.add(noInvites);
+
+            invitationsForm.addComponent(BorderLayout.NORTH,
+                    LayeredLayout.encloseIn(
+                            BoxLayout.encloseY(
+                                    invitesContainer
+                            )
+                    )
+            );
 
             viewFriends.addActionListener((ActionEvent e) -> {
                 //Display.getInstance().execute("https://www.codenameone.com/developers.html");
