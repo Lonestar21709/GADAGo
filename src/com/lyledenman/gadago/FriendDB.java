@@ -19,12 +19,14 @@ public class FriendDB {
         friends.add(gina);
 
         Location michaelLoc = new Location("Michael Foster", 30.374624, -97.738907);
-        Set<Integer> michaelPrefs = null;
+        Set<Integer> michaelPrefs = new HashSet<>();
+        michaelPrefs.add(0);
+        michaelPrefs.add(1);
         Friend michael = new Friend("Michael Foster", michaelLoc, michaelPrefs);
         friends.add(michael);
 
         Location cesarLoc = new Location("Gina Hall", 30.305916, -97.721623);
-        Set<Integer> cesarPrefs = null;
+        Set<Integer> cesarPrefs = new HashSet<>();
         Friend cesar = new Friend("Cesar Garza", cesarLoc, cesarPrefs);
         friends.add(cesar);
 
