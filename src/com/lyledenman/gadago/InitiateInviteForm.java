@@ -7,9 +7,6 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 
-/**
- * Created by Lyle on 4/2/2017.
- */
 public class InitiateInviteForm {
 
     Friend friend;
@@ -37,6 +34,16 @@ public class InitiateInviteForm {
         yelpMsg.getStyle().setBgColor(0x0fff);
 
         yelpResultsContainer.add(yelpMsg);
+        //\
+
+        // Working on Yelp API
+//        YelpAPI yelp = new YelpAPI(ConstantValues.YELP_CONSUMER_KEY,
+//                ConstantValues.YELP_CONSUMER_SECRET,
+//                ConstantValues.YELP_TOKEN,
+//                ConstantValues.YELP_TOKEN_SECRET);
+//        System.out.println(yelp);
+
+        //\
 
         initInviteForm.addComponent(BorderLayout.NORTH,
                 LayeredLayout.encloseIn(
