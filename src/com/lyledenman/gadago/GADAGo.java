@@ -142,15 +142,21 @@ public class GADAGo {
 
             java.util.List<String> list = gb.getItemList();
             java.util.Iterator<String> listIterator = list.iterator();
+
+            int count = 0;
             while (listIterator.hasNext()) {
                 BooleanButton newButton = new BooleanButton(listIterator.next());
                 newButton.setUIID("CalendarDay");
+                if (count < 3) {
+                    newButton.setPreference(true);
+                }
                 newButton.addActionListener((e) -> {
                     System.out.println(newButton.getText());
                     newButton.setPreference(!newButton.isPreference());
                     newButton.setUIID(newButton.isPreference() ? "Button" : "CalendarDay");
                 });
                 prefsButtonContainer.add(newButton);
+                count++;
             }
 
             // Add buttons to PreferencesForm

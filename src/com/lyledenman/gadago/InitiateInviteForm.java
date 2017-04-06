@@ -36,6 +36,17 @@ public class InitiateInviteForm {
         yelpResultsContainer.add(yelpMsg);
         //\
 
+        // Working with YelpRequest (using CN1 stuff now)
+        try {
+            YelpRequest req = new YelpRequest();
+        } catch (NullPointerException npe) {
+            System.err.println("Shit happens");
+        }
+
+//        java.util.List<Map<String, Object>> results = req.fetchPropertyData("house");
+//        System.out.println(results);
+        //\
+
         // Working on Yelp API
 //        YelpAPI yelp = new YelpAPI(ConstantValues.YELP_CONSUMER_KEY,
 //                ConstantValues.YELP_CONSUMER_SECRET,
