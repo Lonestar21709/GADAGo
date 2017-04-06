@@ -60,6 +60,11 @@ public class YelpRequest {
             System.out.println("value: " + accessToken);
             System.out.println("expires_in" + expiresIn);
 
+
+
+
+
+
             Map<String, String> params = new HashMap<>();
 
             params.put("term", "indian food");
@@ -68,20 +73,23 @@ public class YelpRequest {
 
             ConnectionRequest yelpReq = new ConnectionRequest();
             yelpReq.setPost(false);
-            yelpReq.addRequestHeader("bearer", accessToken.toString());
-            cn1AccessToken = new AccessToken(accessToken.toString(), expiresIn.toString());
+            yelpReq.addRequestHeader("Authorization", ("Bearer " + accessToken.toString()));
+            //cn1AccessToken = new AccessToken(accessToken.toString(), expiresIn.toString());
             yelpReq.setUrl("https://api.yelp.com/v3/businesses/search");
 
-            yelpReq.addArgument(grantType, clientCred);
-            yelpReq.addArgument(clientId, clientId_);
-            yelpReq.addArgument(clientSecret, clientSecret_);
+            yelpReq.addArgument("term", "food");
+            yelpReq.addArgument("location", "boston");
+//            yelpReq.addArgument(grantType, clientCred);
+//            yelpReq.addArgument(clientId, clientId_);
+//            yelpReq.addArgument(clientSecret, clientSecret_);
 
             NetworkManager.getInstance().addToQueueAndWait(yelpReq);
             Map<String,Object> yelpResult = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(yelpReq.getResponseData()), "UTF-8"));
+            System.out.println("yelpResult: " + yelpResult);
 
-            service = new Oauth2("https://api.yelp.com/oauth2/token", clientId_, null, "https://api.yelp.com/oauth2/token","https://api.yelp.com/v3/businesses/search", clientSecret_);
-
-            System.out.println(Oauth2.getExpires());
+//            service = new Oauth2("https://api.yelp.com/oauth2/token", clientId_, null, "https://api.yelp.com/oauth2/token","https://api.yelp.com/v3/businesses/search", clientSecret_);
+//
+//            System.out.println(Oauth2.getExpires());
 
         } catch(Exception err) {
             Log.e(err);
