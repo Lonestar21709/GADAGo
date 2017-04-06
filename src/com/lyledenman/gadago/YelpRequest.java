@@ -4,6 +4,7 @@ import com.codename1.io.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,17 +28,70 @@ public class YelpRequest {
     private static final String CONSUMER_SECRET = ConstantValues.YELP_CONSUMER_SECRET;
     private static final String TOKEN = ConstantValues.YELP_TOKEN;
     private static final String TOKEN_SECRET = ConstantValues.YELP_TOKEN_SECRET;
+//    private final String accessToken = ConstantValues.ACCESS_TOKEN;
 
     Oauth2 service;
-    AccessToken accessToken;
-    AccessToken accessTokenSecret;
+    AccessToken cn1AccessToken;
 
     public YelpRequest() {
-
         try {
             ConnectionRequest r = new ConnectionRequest();
             r.setPost(true);
 
+            r.setUrl("https://api.yelp.com/oauth2/token");
+
+            String grantType = Util.encodeBody("grant_type");
+            String clientCred = Util.encodeBody("client_credentials");
+            String clientId = Util.encodeBody("client_id");
+            String clientId_ = Util.encodeBody("7kIp4gSQ3QZkxHbu9rEeDQ");
+            String clientSecret = Util.encodeBody("client_secret");
+            String clientSecret_ = Util.encodeBody("Gq5ljFxb4yGsq4VPBGJzpR2GUg3QgLUdXZZc6jFTpxYxrWXyoa0SVuPfAueOeVJa");
+
+            r.addArgument(grantType, clientCred);
+            r.addArgument(clientId, clientId_);
+            r.addArgument(clientSecret, clientSecret_);
+
+            NetworkManager.getInstance().addToQueueAndWait(r);
+            Map<String,Object> result = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(r.getResponseData()), "UTF-8"));
+
+            // Get the access_token and expires_in from the result
+            Object accessToken = result.get("access_token");
+            Object expiresIn = result.get("expires_in");
+            System.out.println("value: " + accessToken);
+            System.out.println("expires_in" + expiresIn);
+
+            Map<String, String> params = new HashMap<>();
+
+            params.put("term", "indian food");
+            params.put("latitude", "40.581140");
+            params.put("longitude", "-111.914184");
+
+            ConnectionRequest yelpReq = new ConnectionRequest();
+            yelpReq.setPost(false);
+            yelpReq.addRequestHeader("bearer", accessToken.toString());
+            cn1AccessToken = new AccessToken(accessToken.toString(), expiresIn.toString());
+            yelpReq.setUrl("https://api.yelp.com/v3/businesses/search");
+
+            yelpReq.addArgument(grantType, clientCred);
+            yelpReq.addArgument(clientId, clientId_);
+            yelpReq.addArgument(clientSecret, clientSecret_);
+
+            NetworkManager.getInstance().addToQueueAndWait(yelpReq);
+            Map<String,Object> yelpResult = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(yelpReq.getResponseData()), "UTF-8"));
+
+            service = new Oauth2("https://api.yelp.com/oauth2/token", clientId_, null, "https://api.yelp.com/oauth2/token","https://api.yelp.com/v3/businesses/search", clientSecret_);
+
+            System.out.println(Oauth2.getExpires());
+
+        } catch(Exception err) {
+            Log.e(err);
+        }
+    }
+
+    public void printAccessToken() {
+        try {
+            ConnectionRequest r = new ConnectionRequest();
+            r.setPost(true);
 
             r.setUrl("https://api.yelp.com/oauth2/token");
 
@@ -58,12 +112,14 @@ public class YelpRequest {
             Map<String, Object> response = (Map<String, Object>)result.get("response");
             System.out.println("Response: " + response);
 
-            this.accessToken = new AccessToken(TOKEN, null);
-            this.accessTokenSecret = new AccessToken(TOKEN_SECRET, null);
 
         } catch(Exception err) {
             Log.e(err);
         }
+    }
+
+    public void getBusinessSearch(String loc, Map<String, String> params) {
+
     }
 
     private int pageNumber = 1;
