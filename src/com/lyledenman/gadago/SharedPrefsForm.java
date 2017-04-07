@@ -32,8 +32,6 @@ public class SharedPrefsForm {
         for (Object o : prefsButtons) {
             if (o instanceof BooleanButton) {
 
-                System.out.println("Common: " + commonInterests.size());
-
                 if (((BooleanButton) o).isPreference() && friend.getMatchingPreferences().contains(counter)) {
                     commonInterests.add((BooleanButton)o);
                 }

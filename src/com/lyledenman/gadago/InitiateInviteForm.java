@@ -7,6 +7,9 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 
+import java.util.List;
+import java.util.Map;
+
 public class InitiateInviteForm {
 
     Friend friend;
@@ -26,35 +29,32 @@ public class InitiateInviteForm {
         Container yelpResultsContainer = new Container(BoxLayout.y());
         yelpResultsContainer.setScrollableY(true);
 
-        System.out.println("Food to send to Yelp API: " + foodPreference);
+        YelpRequest req = new YelpRequest(foodPreference);
+        Map<String,Object> yelpResult = req.getYelpResult();
 
-        // PLACEHOLDER
-        TextArea yelpMsg = new TextArea("This is where Yelp API query results will go.");
-        yelpMsg.getStyle().setFgColor(0xff);
-        yelpMsg.getStyle().setBgColor(0x0fff);
+        // TODO: Parse the Map of yelpResults to get the items I need: 1. Name 2. Distance (miles) 3. Stars
 
-        yelpResultsContainer.add(yelpMsg);
-        //\
+        List<Map<String, Object>> test = (java.util.List<Map<String, Object>>)yelpResult.get("root");
+        System.out.println("test: " + test);
 
-        // Working with YelpRequest (using CN1 stuff now)
-        try {
-            YelpRequest req = new YelpRequest();
-        } catch (NullPointerException npe) {
-            System.err.println("Shit happens");
+        if (yelpResult == null || yelpResult.size() < 1) {
+            TextArea yelpMsg = new TextArea(String.format("No %s restaurants were found in your area. Please try another food type."));
+            yelpMsg.getStyle().setFgColor(0xff);
+            yelpMsg.getStyle().setBgColor(0x0fff);
+            yelpResultsContainer.add(yelpMsg);
+        } else {
+
+//            for(Map<String, Object> obj : yelpResult) {
+//                String url = (String) obj.get("url");
+//                String name = (String) obj.get("name");
+//                java.util.List<String> titles = (java.util.List<String>) obj.get("titles");
+//            }
+
+            for (Map.Entry<String, Object> entry : yelpResult.entrySet())
+            {
+                System.out.println(entry.getKey() + "/" + entry.getValue());
+            }
         }
-
-//        java.util.List<Map<String, Object>> results = req.fetchPropertyData("house");
-//        System.out.println(results);
-        //\
-
-        // Working on Yelp API
-//        YelpAPI yelp = new YelpAPI(ConstantValues.YELP_CONSUMER_KEY,
-//                ConstantValues.YELP_CONSUMER_SECRET,
-//                ConstantValues.YELP_TOKEN,
-//                ConstantValues.YELP_TOKEN_SECRET);
-//        System.out.println(yelp);
-
-        //\
 
         initInviteForm.addComponent(BorderLayout.NORTH,
                 LayeredLayout.encloseIn(
