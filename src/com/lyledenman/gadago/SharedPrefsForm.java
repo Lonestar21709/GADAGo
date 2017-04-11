@@ -53,7 +53,7 @@ public class SharedPrefsForm {
                 newButton.addActionListener((e) -> {
                     System.out.println("Clicked on button: " + newButton.getText());
                     InitiateInviteForm initInviteForm = new InitiateInviteForm(friend, sharedPrefsForm, newButton.getText());
-                    initInviteForm.showForm();
+                    //initInviteForm.showForm();
 
                 });
 

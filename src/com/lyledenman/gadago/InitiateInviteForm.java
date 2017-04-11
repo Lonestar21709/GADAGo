@@ -7,10 +7,15 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 
-import java.util.List;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InitiateInviteForm {
+    private final double METERS_IN_MILE = 1609.34;
 
     Friend friend;
     Form initInviteForm;
@@ -30,30 +35,73 @@ public class InitiateInviteForm {
         yelpResultsContainer.setScrollableY(true);
 
         YelpRequest req = new YelpRequest(foodPreference);
-        Map<String,Object> yelpResult = req.getYelpResult();
+        Map<String, Object> data = req.getYelpResult();
+        ArrayList<String> businesses = (ArrayList<String>)data.get("businesses");
+        int busSize = businesses.size();
 
-        // TODO: Parse the Map of yelpResults to get the items I need: 1. Name 2. Distance (miles) 3. Stars
-
-        List<Map<String, Object>> test = (java.util.List<Map<String, Object>>)yelpResult.get("root");
-        System.out.println("test: " + test);
-
-        if (yelpResult == null || yelpResult.size() < 1) {
+        if (data.size() < 1) {
             TextArea yelpMsg = new TextArea(String.format("No %s restaurants were found in your area. Please try another food type."));
             yelpMsg.getStyle().setFgColor(0xff);
             yelpMsg.getStyle().setBgColor(0x0fff);
             yelpResultsContainer.add(yelpMsg);
         } else {
 
-//            for(Map<String, Object> obj : yelpResult) {
-//                String url = (String) obj.get("url");
-//                String name = (String) obj.get("name");
-//                java.util.List<String> titles = (java.util.List<String>) obj.get("titles");
-//            }
+            String[] names = new String[busSize];
+            String[] ratings = new String[busSize];
+            String[] distances = new String[busSize];
 
-            for (Map.Entry<String, Object> entry : yelpResult.entrySet())
-            {
-                System.out.println(entry.getKey() + "/" + entry.getValue());
+            int count = 0;
+            for (Object entry : businesses) {
+                String curr = entry.toString();
+
+                System.out.println(parseName(curr));
+                System.out.println(parseRating(curr));
+                System.out.println(parseDistance(curr));
+                System.out.println(String.format("%.2f", getMiles(parseDistance(curr))));
+
+                names[count] = parseName(curr);
+                ratings[count] = parseRating(curr);
+                distances[count] = String.format("%.2f", getMiles(parseDistance(curr)));
+
+                count++;
             }
+
+            // TODO: INFINITE SCROLL MANAGER
+            Form hi = new Form(String.format("Choose a Restaurant", name[0]), new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
+            setBackCommand(hi, backToPage);
+            Container hiContainer = new Container(BoxLayout.y());
+            hiContainer.setScrollableY(true);
+
+            ArrayList<Button> busButtons = new ArrayList<>();
+            for (int i = 0; i < busSize; i++) {
+                System.out.println(i);
+                String busName = names[i];
+                String busRating = ratings[i];
+                String busDist = distances[i];
+                final Button newButton = new Button(String.format("%s %-6s %smi", busName, busRating, busDist));
+                newButton.addActionListener((e) -> {
+                    System.out.println("Clicked on button: " + newButton.getText());
+                    InviteForm inviteForm = new InviteForm(friend, backToPage, busName);
+                    inviteForm.showForm();
+                });
+                busButtons.add(newButton);
+            }
+
+            for (Button b : busButtons) {
+                hiContainer.add(b);
+            }
+
+            hi.addComponent(BorderLayout.NORTH,
+                    LayeredLayout.encloseIn(
+                            BoxLayout.encloseY(
+                                    hiContainer
+                            )
+                    )
+            );
+            hi.show();
+            //\
+
+
         }
 
         initInviteForm.addComponent(BorderLayout.NORTH,
@@ -63,6 +111,31 @@ public class InitiateInviteForm {
                         )
                 )
         );
+    }
+
+    private double getMiles(String s) {
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+        double meters = Double.parseDouble(s);
+        return (meters / METERS_IN_MILE);
+    }
+
+    private String parseName(String s) {
+        Pattern p = Pattern.compile("name=([^,]*)");
+        Matcher m = p.matcher(s);
+        return m.find() ? m.group(1) : null;
+    }
+
+    private String parseRating(String s) {
+        Pattern p = Pattern.compile("rating=([^,]*)");
+        Matcher m = p.matcher(s);
+        return m.find() ? m.group(1) : null;
+    }
+
+    private String parseDistance(String s) {
+        Pattern p = Pattern.compile("distance=([^,}]*)");
+        Matcher m = p.matcher(s);
+        return m.find() ? m.group(1) : null;
     }
 
     public void showForm() {

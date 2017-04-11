@@ -306,7 +306,7 @@ public class GADAGo {
 
     }
 
-    protected void setBackCommand(Form from, Form to) {
+    public void setBackCommand(Form from, Form to) {
         Command back = new Command("") {
 
             @Override

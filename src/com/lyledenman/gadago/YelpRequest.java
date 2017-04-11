@@ -4,7 +4,6 @@ import com.codename1.io.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +29,9 @@ public class YelpRequest {
     private static final String TOKEN_SECRET = ConstantValues.YELP_TOKEN_SECRET;
 //    private final String accessToken = ConstantValues.ACCESS_TOKEN;
 
-    private Map<String,Object> yelpResult = null;
+    private Map<String, Object> yelpResult = null;
+    private int nPlacesReturned = 0;
+
     public YelpRequest(String foodPreference) {
         try {
             ConnectionRequest r = new ConnectionRequest();
@@ -55,15 +56,6 @@ public class YelpRequest {
             // Get the access_token and expires_in from the result
             Object accessToken = result.get("access_token");
             Object expiresIn = result.get("expires_in");
-            System.out.println("value: " + accessToken);
-            System.out.println("expires_in" + expiresIn);
-
-
-            Map<String, String> params = new HashMap<>();
-
-            params.put("term", "indian food");
-            params.put("latitude", "40.581140");
-            params.put("longitude", "-111.914184");
 
             ConnectionRequest yelpReq = new ConnectionRequest();
             yelpReq.setPost(false);
@@ -81,7 +73,7 @@ public class YelpRequest {
             NetworkManager.getInstance().addToQueueAndWait(yelpReq);
             yelpResult = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(yelpReq.getResponseData()), "UTF-8"));
 
-        } catch(Exception err) {
+            } catch(Exception err) {
             Log.e(err);
         }
     }
@@ -114,10 +106,7 @@ public class YelpRequest {
 
             NetworkManager.getInstance().addToQueueAndWait(r);
             Map<String,Object> result = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(r.getResponseData()), "UTF-8"));
-            System.out.println(result);
             Map<String, Object> response = (Map<String, Object>)result.get("response");
-            System.out.println("Response: " + response);
-
 
         } catch(Exception err) {
             Log.e(err);
