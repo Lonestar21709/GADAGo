@@ -7,6 +7,8 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 
+import java.util.Set;
+
 /**
  * Created by Lyle on 4/11/2017.
  */
@@ -17,7 +19,7 @@ public class InviteForm  {
     Form backToPage;
     String restaurant;
 
-    public InviteForm(Friend friend, Form backToPage, String restaurant) {
+    public InviteForm(Friend friend, Form backToPage, String restaurant, Set<Button> invitationsButtons) {
         super();
         this.friend = friend;
         this.restaurant = restaurant;
@@ -35,6 +37,10 @@ public class InviteForm  {
         noInterests.addActionListener((ActionEvent e) -> {
             backToPage.show();
         });
+
+        final Button newButton = new Button(String.format("%s: %s", friend.getName(), restaurant));
+        newButton.getStyle().setFont(Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
+        invitationsButtons.add(newButton);
 
         inviteSentContainer.add(noInterests);
 

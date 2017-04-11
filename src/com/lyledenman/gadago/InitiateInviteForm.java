@@ -11,6 +11,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +24,7 @@ public class InitiateInviteForm {
     String foodPref;
     Form profileForm;
 
-    InitiateInviteForm(Friend friend, Form backToPage, String foodPreference, Form profileForm) {
+    InitiateInviteForm(Friend friend, Form backToPage, String foodPreference, Form profileForm, Set<Button> invitationButtons) {
         this.friend = friend;
         this.backToPage = backToPage;
         this.foodPref = foodPreference;
@@ -80,10 +81,11 @@ public class InitiateInviteForm {
                 String busName = names[i];
                 String busRating = ratings[i];
                 String busDist = distances[i];
-                final Button newButton = new Button(String.format("%s %-6s %smi", busName, busRating, busDist));
+                final Button newButton = new Button(String.format("%-30s %6s %6smi", busName, busRating, busDist));
+                newButton.getStyle().setFont(Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
                 newButton.addActionListener((e) -> {
                     System.out.println("Clicked on button: " + newButton.getText());
-                    InviteForm inviteForm = new InviteForm(friend, profileForm, busName);
+                    InviteForm inviteForm = new InviteForm(friend, profileForm, busName, invitationButtons);
                     inviteForm.showForm();
                 });
                 busButtons.add(newButton);

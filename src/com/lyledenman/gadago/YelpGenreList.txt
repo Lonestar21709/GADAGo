@@ -1,77 +1,31 @@
-Afghan (afghani)
-African (african)
-American (New) (newamerican)
-American (Traditional) (tradamerican)
-Arabian (arabian)
-Argentine (argentine)
-Armenian (armenian)
-Asian Fusion (asianfusion)
-Australian (australian)
-Austrian (austrian)
-Bangladeshi (bangladeshi)
-Barbeque (bbq)
-Basque (basque)
-Belgian (belgian)
-Brasseries (brasseries)
-Brazilian (brazilian)
-Breakfast & Brunch (breakfast_brunch)
-British (british)
-Buffets (buffets)
-Burgers (burgers)
-Burmese (burmese)
-Cafes (cafes)
-Cafeteria (cafeteria)
-Cajun/Creole (cajun)
-Cambodian (cambodian)
-Caribbean (caribbean)
-Catalan (catalan)
-Cheesesteaks (cheesesteaks)
-Chicken Shop (chickenshop)
-Chicken Wings (chicken_wings)
-Chinese (chinese)
-Comfort Food (comfortfood)
-Creperies (creperies)
-Cuban (cuban)
-Czech (czech)
-Delis (delis)
-Diners (diners)
-Dinner Theater (dinnertheater)
-Ethiopian (ethiopian)
-Fast Food (hotdogs)
-Filipino (filipino)
-Fish & Chips (fishnchips)
-Fondue (fondue)
-Food Court (food_court)
-Food Stands (foodstands)
-French (french)
-Gastropubs (gastropubs)
-German (german)
-Gluten-Free (gluten_free)
-Greek (greek)
-Guamanian (guamanian)
-Halal (halal)
-Hawaiian (hawaiian)
-Himalayan/Nepalese (himalayan)
-Honduran (honduran)
-Hong Kong Style Cafe (hkcafe)
-Hot Dogs (hotdog)
-Hot Pot (hotpot)
-Hungarian (hungarian)
-Iberian (iberian)
-Indian (indpak)
-Indonesian (indonesian)
-Irish (irish)
-Italian (italian)
-Japanese (japanese)
-Kebab (kebab)
-Korean (korean)
-Kosher (kosher)
-Laotian (laotian)
-Latin American (latin)
-Live/Raw Food (raw_food)
-Malaysian (malaysian)
-Mediterranean (mediterranean)
-Mexican (mexican)
+American
+Asian Fusion
+Barbeque
+Breakfast & Brunch
+Buffets
+Burgers
+Cafes
+Chicken Wings
+Chinese
+Delis
+Diners
+Ethiopian
+Fast Food
+Fondue
+Food Stands
+Gluten-Free
+Greek
+Halal
+Hot Dogs
+Indian
+Indonesian
+Italian
+Japanese
+Kebab
+Korean
+Kosher
+Mediterranean
+Mexican
 Middle Eastern (mideastern)
 Modern European (modern_european)
 Mongolian (mongolian)

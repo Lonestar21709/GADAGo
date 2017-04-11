@@ -1,76 +1,31 @@
-Afghan
-African
 American
-Arabian
-Argentine
-Armenian
 Asian Fusion
-Australian
-Austrian
-Bangladeshi
 Barbeque
-Basque
-Belgian
-Brasseries
-Brazilian
 Breakfast & Brunch
-British
 Buffets
 Burgers
-Burmese
 Cafes
-Cafeteria
-Cajun/Creole
-Cambodian
-Caribbean
-Catalan
-Cheesesteaks
-Chicken Shop
 Chicken Wings
 Chinese
-Comfort Food
-Creperies
-Cuban
-Czech
 Delis
 Diners
-Dinner Theater
-Ethiopian (ethiopian)
-Fast Food (hotdogs)
-Filipino (filipino)
-Fish & Chips
-Fondue (fondue)
-Food Court (food_court)
-Food Stands (foodstands)
-French (french)
-Gastropubs (gastropubs)
-German (german)
-Gluten-Free (gluten_free)
-Greek (greek)
-Guamanian (guamanian)
-Halal (halal)
-Hawaiian (hawaiian)
-Himalayan/Nepalese (himalayan)
-Honduran (honduran)
-Hong Kong Style Cafe (hkcafe)
-Hot Dogs (hotdog)
-Hot Pot (hotpot)
-Hungarian (hungarian)
-Iberian (iberian)
-Indian (indpak)
-Indonesian (indonesian)
-Irish (irish)
-Italian (italian)
-Japanese (japanese)
-Kebab (kebab)
-Korean (korean)
-Kosher (kosher)
-Laotian (laotian)
-Latin American (latin)
-Live/Raw Food (raw_food)
-Malaysian (malaysian)
-Mediterranean (mediterranean)
-Mexican (mexican)
+Ethiopian
+Fast Food
+Fondue
+Food Stands
+Gluten-Free
+Greek
+Halal
+Hot Dogs
+Indian
+Indonesian
+Italian
+Japanese
+Kebab
+Korean
+Kosher
+Mediterranean
+Mexican
 Middle Eastern (mideastern)
 Modern European (modern_european)
 Mongolian (mongolian)

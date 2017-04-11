@@ -8,6 +8,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by Lyle on 3/30/2017.
@@ -19,7 +20,7 @@ public class SharedPrefsForm {
     Form backToPage;
     Form profileForm;
 
-    SharedPrefsForm(Friend friend, Form backToPage, Container prefsButtons, Form profileForm) {
+    SharedPrefsForm(Friend friend, Form backToPage, Container prefsButtons, Form profileForm, Set<Button> invitationsButtons) {
         this.profileForm = profileForm;
 
         String[] name = friend.getName().split(" ");
@@ -54,7 +55,7 @@ public class SharedPrefsForm {
                 final BooleanButton newButton = new BooleanButton(b.getText());
                 newButton.addActionListener((e) -> {
                     System.out.println("Clicked on button: " + newButton.getText());
-                    InitiateInviteForm initInviteForm = new InitiateInviteForm(friend, sharedPrefsForm, newButton.getText(), profileForm);
+                    InitiateInviteForm initInviteForm = new InitiateInviteForm(friend, sharedPrefsForm, newButton.getText(), profileForm, invitationsButtons);
                     //initInviteForm.showForm();
 
                 });
