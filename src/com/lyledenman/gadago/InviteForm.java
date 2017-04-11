@@ -20,8 +20,8 @@ public class InviteForm  {
     public InviteForm(Friend friend, Form backToPage, String restaurant) {
         super();
         this.friend = friend;
-        this.backToPage = backToPage;
         this.restaurant = restaurant;
+        this.backToPage = backToPage;
 
         thisForm = new Form(("Invite Sent"), new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
         setBackCommand(thisForm, backToPage);

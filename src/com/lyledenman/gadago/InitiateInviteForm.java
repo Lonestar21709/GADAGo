@@ -21,11 +21,13 @@ public class InitiateInviteForm {
     Form initInviteForm;
     Form backToPage;
     String foodPref;
+    Form profileForm;
 
-    InitiateInviteForm(Friend friend, Form backToPage, String foodPreference) {
+    InitiateInviteForm(Friend friend, Form backToPage, String foodPreference, Form profileForm) {
         this.friend = friend;
         this.backToPage = backToPage;
         this.foodPref = foodPreference;
+        this.profileForm = profileForm;
 
         String[] name = friend.getName().split(" ");
         this.initInviteForm = new Form(("Select a restaurant:"), new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
@@ -81,7 +83,7 @@ public class InitiateInviteForm {
                 final Button newButton = new Button(String.format("%s %-6s %smi", busName, busRating, busDist));
                 newButton.addActionListener((e) -> {
                     System.out.println("Clicked on button: " + newButton.getText());
-                    InviteForm inviteForm = new InviteForm(friend, backToPage, busName);
+                    InviteForm inviteForm = new InviteForm(friend, profileForm, busName);
                     inviteForm.showForm();
                 });
                 busButtons.add(newButton);

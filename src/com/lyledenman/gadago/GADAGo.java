@@ -22,6 +22,8 @@ public class GADAGo {
     private Form current;
     private Resources theme;
 
+    Form profileForm;
+
     private boolean userLoggedIn;
     private boolean isUserLoggedIn() {
         // STUB
@@ -62,7 +64,7 @@ public class GADAGo {
             Container prefsButtonContainer = new Container(BoxLayout.y());
             prefsButtonContainer.setScrollableY(true);
 
-            Form profileForm = new Form("GADA Go",new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
+            profileForm = new Form("GADA Go",new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
 
             FontImage messageIcon = FontImage.createMaterial(FontImage.MATERIAL_CHAT, UIManager.getInstance().getComponentStyle("TitleCommand"));
             FontImage settingsIcon = FontImage.createMaterial(FontImage.MATERIAL_SETTINGS_APPLICATIONS, UIManager.getInstance().getComponentStyle("TitleCommand"));
@@ -117,7 +119,7 @@ public class GADAGo {
                 friendButton = new Button(String.format("%-20s %6.2f mi", friend.getName(), friend.getLocation().distanceTo(myLoc)));
                 friendButton.addActionListener((e) -> {
                     System.out.println("Clicked on friend: " + friend.getName());
-                    SharedPrefsForm sharedPrefs = new SharedPrefsForm(friend, friendsForm, prefsButtonContainer);
+                    SharedPrefsForm sharedPrefs = new SharedPrefsForm(friend, friendsForm, prefsButtonContainer, profileForm);
                     sharedPrefs.showForm();
                 });
 
@@ -331,6 +333,10 @@ public class GADAGo {
     }
 
     public void destroy() {
+    }
+
+    Form getProfileForm() {
+        return profileForm;
     }
 
 }

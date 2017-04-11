@@ -17,8 +17,10 @@ public class SharedPrefsForm {
     Friend friend;
     Form sharedPrefsForm;
     Form backToPage;
+    Form profileForm;
 
-    SharedPrefsForm(Friend friend, Form backToPage, Container prefsButtons) {
+    SharedPrefsForm(Friend friend, Form backToPage, Container prefsButtons, Form profileForm) {
+        this.profileForm = profileForm;
 
         String[] name = friend.getName().split(" ");
         sharedPrefsForm = new Form(String.format("You and %s like", name[0]), new BorderLayout((BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE)));
@@ -52,7 +54,7 @@ public class SharedPrefsForm {
                 final BooleanButton newButton = new BooleanButton(b.getText());
                 newButton.addActionListener((e) -> {
                     System.out.println("Clicked on button: " + newButton.getText());
-                    InitiateInviteForm initInviteForm = new InitiateInviteForm(friend, sharedPrefsForm, newButton.getText());
+                    InitiateInviteForm initInviteForm = new InitiateInviteForm(friend, sharedPrefsForm, newButton.getText(), profileForm);
                     //initInviteForm.showForm();
 
                 });
